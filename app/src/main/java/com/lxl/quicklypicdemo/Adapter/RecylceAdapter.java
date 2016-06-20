@@ -63,7 +63,7 @@ public class RecylceAdapter extends RecyclerView.Adapter {
 			@Override
 			public void onClick(View v) {
 				if (mOnClickerListener!=null){
-					mOnClickerListener.onItemClick(v,data.get(position));
+					mOnClickerListener.onItemClick(v,data.get(position),position);
 				}
 			}
 		});

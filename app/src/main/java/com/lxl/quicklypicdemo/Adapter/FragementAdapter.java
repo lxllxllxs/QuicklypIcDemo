@@ -15,8 +15,7 @@ import java.util.List;
  */
 public class FragementAdapter extends FragmentPagerAdapter {
 	String path;
-	List<Imag> datas;
-
+	private List<Imag> datas;
 	public FragementAdapter(FragmentManager fm) {
 		super(fm);
 		Log.d("FragmentAgapter'", "FragementAdapter: ");
@@ -26,6 +25,7 @@ public class FragementAdapter extends FragmentPagerAdapter {
 	@Override
 	public Fragment getItem(int position) {
 		return MyFragement.getFragment(datas.get(position).getPath());
+
 	}
 
 	@Override

@@ -42,17 +42,17 @@ public class MainActivity extends AppCompatActivity {
 		RecylceAdapter recylceAdapter=new RecylceAdapter(getApplicationContext(),mDatas);
 		recylceAdapter.setOnItemClickListener(new RecyclerOnclickListener() {
 			@Override
-			public void onItemClick(View view, Imag data) {
+			public void onItemClick(View view, Imag data,int postion) {
 				if (data==null){
 					Toast.makeText(getApplicationContext(),"NULL",Toast.LENGTH_SHORT).show();
 
 
 				}else {
-					Toast.makeText(getApplicationContext(),data.getPath(),Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),postion+"",Toast.LENGTH_SHORT).show();
 					Intent i=new Intent(MainActivity.this,ViewPagerActivity.class);
 					Bundle bundle=new Bundle();
 					bundle.putSerializable("Images", (Serializable) mDatas);
-					bundle.putString("path",data.getPath());
+					bundle.putInt("postion",postion);
 					i.putExtras(bundle);
 					startActivity(i);
 				}

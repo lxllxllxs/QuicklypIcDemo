@@ -20,6 +20,7 @@ public class ViewPagerActivity extends AppCompatActivity {
 	private FragementAdapter fragementAdapter;
 	private static final String TAG="ViewPagerActivity";
 	private String path;
+	private  int postion;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +28,9 @@ public class ViewPagerActivity extends AppCompatActivity {
 		setContentView(R.layout.viewpager);
 		Bundle bundle=getIntent().getExtras();
 		mdatas=(List<Imag>)bundle.getSerializable("Images");
-		//传进图片路径
-		path=bundle.getString("path");
-		Log.d(TAG, "onCreate: "+mdatas.size()+"=="+path);
+		//传进当前位置
+		postion=bundle.getInt("postion");
+		Log.d(TAG, "onCreate: "+mdatas.size()+"=="+postion);
 
 		init();
 	}
@@ -39,7 +40,10 @@ public class ViewPagerActivity extends AppCompatActivity {
 		viewPager=(ViewPager)findViewById(R.id.viewpager);
 		fragementAdapter=new FragementAdapter(getSupportFragmentManager());
 		fragementAdapter.setDatas(mdatas);
+		//设置Adapter
 		viewPager.setAdapter(fragementAdapter);
+		//设置当前ViewPager的位置
+		viewPager.setCurrentItem(postion);
 
 	}
 }
