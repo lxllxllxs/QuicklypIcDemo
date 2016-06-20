@@ -93,6 +93,9 @@ public class RecylceAdapter extends RecyclerView.Adapter {
 
 	}
 
+	public List<Imag> getImags(){
+		return  data;
+	}
 
 	private ImageLoader getImagloader(){
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration

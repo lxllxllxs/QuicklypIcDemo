@@ -1,6 +1,7 @@
 package com.lxl.quicklypicdemo.ui;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,6 +19,7 @@ import com.lxl.quicklypicdemo.Utils.GridSpacingItemDecoration;
 import com.lxl.quicklypicdemo.Utils.ScreenUtils;
 import com.lxl.quicklypicdemo.bean.Imag;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
 				}else {
 					Toast.makeText(getApplicationContext(),data.getPath(),Toast.LENGTH_SHORT).show();
+					Intent i=new Intent(MainActivity.this,ViewPagerActivity.class);
+					Bundle bundle=new Bundle();
+					bundle.putSerializable("Images", (Serializable) mDatas);
+					bundle.putString("path",data.getPath());
+					i.putExtras(bundle);
+					startActivity(i);
 				}
 
 			}
@@ -94,9 +102,8 @@ public class MainActivity extends AppCompatActivity {
 			imag.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)));
 
 			mDatas.add(imag);
-			//Log.d(TAG, "initData: "+mDatas.size());
 		}
-
+		Log.d(TAG, "initData: "+mDatas.size());
 
 	}
 
