@@ -26,35 +26,47 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/6/20.
  */
-public class RecylceAdapter extends RecyclerView.Adapter{
+public class RecylceAdapter extends RecyclerView.Adapter {
+
 	private Context context;
 	private File file= new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/ImageCache");
 	private  List<Imag> data;
-	private  ImageLoader imageLoader;
 
+	private  static final String TAG="RecylceAdapter";
+	private RecyclerOnclickListener mOnClickerListener=null;
+	private static  int id;
 	public RecylceAdapter(Context context, List<Imag> data){
 		this.context=context;
 		this.data=data;
+	//	this.onclicker=onClicListener;
+	}
 
-
-		imageLoader=getImagloader();
-
-
+	public  void setOnItemClickListener(RecyclerOnclickListener Recycleonclickener){
+		mOnClickerListener=Recycleonclickener;
 	}
 
 
 	@Override
 	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-		Viewholder viewholder=new Viewholder(LayoutInflater.from(context).inflate(R.layout.gridviewitem,parent,false));
+		View view=LayoutInflater.from(context).inflate(R.layout.gridviewitem,parent,false);
+		Viewholder viewholder=new Viewholder(view);
 
 		return viewholder;
 	}
 
 	@Override
-	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+	public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-		Viewholder myholder=(Viewholder)holder;
+		final Viewholder myholder=(Viewholder)holder;
+
+		myholder.iv.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mOnClickerListener!=null){
+					mOnClickerListener.onItemClick(v,data.get(position));
+				}
+			}
+		});
 //		imageLoader.displayImage("file://"+data.get(position).getPath(), myholder.iv);
 		Glide.with(context)
 				.load(new File(data.get(position).getPath()))
@@ -64,8 +76,6 @@ public class RecylceAdapter extends RecyclerView.Adapter{
 				.error(R.drawable.erro)
 				.dontAnimate()
 				.into(myholder.iv);
-
-
 	}
 
 	@Override
@@ -74,7 +84,7 @@ public class RecylceAdapter extends RecyclerView.Adapter{
 	}
 
 
-	static  class Viewholder extends RecyclerView.ViewHolder{
+	public static class Viewholder extends RecyclerView.ViewHolder {
 		ImageView iv;
 		public Viewholder(View itemView) {
 			super(itemView);

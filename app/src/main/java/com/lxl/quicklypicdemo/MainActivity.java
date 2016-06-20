@@ -9,31 +9,46 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import com.lxl.quicklypicdemo.Adapter.RecyclerOnclickListener;
+import com.lxl.quicklypicdemo.Adapter.RecylceAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 	private  static  final String TAG="MainActivity";
-	private  GridAdapter gridAdapter;
 	private RecyclerView recyclerView;
 	private List<Imag> mDatas;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		//init();
+		init();
 	}
 
 	public void init(){
 		initData();
 		recyclerView=(RecyclerView) findViewById(R.id.rv);
 		recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),3));
-	//	recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, ScreenUtils.dip2px(this, 2), false));
-	//	RecylceAdapter recylceAdapter=new RecylceAdapter(getApplicationContext(),mDatas);
+		recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, ScreenUtils.dip2px(this, 2), false));
+		RecylceAdapter recylceAdapter=new RecylceAdapter(getApplicationContext(),mDatas);
+		recylceAdapter.setOnItemClickListener(new RecyclerOnclickListener() {
+			@Override
+			public void onItemClick(View view, Imag data) {
+				if (data==null){
+					Toast.makeText(getApplicationContext(),"NULL",Toast.LENGTH_SHORT).show();
+
+				}else {
+					Toast.makeText(getApplicationContext(),data.getPath(),Toast.LENGTH_SHORT).show();
+				}
+
+			}
+		});
 
 
-	//	recyclerView.setAdapter(recylceAdapter);
+		recyclerView.setAdapter(recylceAdapter);
 	}
 
 
@@ -56,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 		while (cmp3.moveToNext()){
 			int id =cmp3.getColumnIndex(MediaStore.Audio.Media._ID);
 			String path=cmp3.getString(cmp3.getColumnIndex(MediaStore.Audio.Media.DATA));
-			Log.d(TAG, "scan: "+cmp3.getString(id)+path);
+			//Log.d(TAG, "scan: "+cmp3.getString(id)+path);
 
 
 		}
@@ -74,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 			imag.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)));
 
 			mDatas.add(imag);
-			Log.d(TAG, "initData: "+mDatas.size());
+			//Log.d(TAG, "initData: "+mDatas.size());
 		}
 
 
