@@ -1,4 +1,4 @@
-package com.lxl.quicklypicdemo;
+package com.lxl.quicklypicdemo.ui;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import com.lxl.quicklypicdemo.Adapter.RecyclerOnclickListener;
 import com.lxl.quicklypicdemo.Adapter.RecylceAdapter;
+import com.lxl.quicklypicdemo.R;
+import com.lxl.quicklypicdemo.Utils.GridSpacingItemDecoration;
+import com.lxl.quicklypicdemo.Utils.ScreenUtils;
+import com.lxl.quicklypicdemo.bean.Imag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 			public void onItemClick(View view, Imag data) {
 				if (data==null){
 					Toast.makeText(getApplicationContext(),"NULL",Toast.LENGTH_SHORT).show();
+
 
 				}else {
 					Toast.makeText(getApplicationContext(),data.getPath(),Toast.LENGTH_SHORT).show();

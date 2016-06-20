@@ -1,4 +1,4 @@
-package com.lxl.quicklypicdemo;
+package com.lxl.quicklypicdemo.Utils;
 
 import android.app.Activity;
 import android.content.Context;

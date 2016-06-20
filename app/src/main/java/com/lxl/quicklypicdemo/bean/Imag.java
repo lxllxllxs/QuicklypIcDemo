@@ -1,4 +1,4 @@
-package com.lxl.quicklypicdemo;
+package com.lxl.quicklypicdemo.bean;
 
 /**
  * Created by Administrator on 2016/6/20.

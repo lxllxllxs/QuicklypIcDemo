@@ -1,4 +1,4 @@
-package com.lxl.quicklypicdemo;
+package com.lxl.quicklypicdemo.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
