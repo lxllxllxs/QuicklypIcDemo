@@ -1,11 +1,11 @@
 package com.lxl.quicklypicdemo.ui;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,14 +23,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 	private  static  final String TAG="MainActivity";
 	private RecyclerView recyclerView;
 	private List<Imag> mDatas;
+	private View view;
+	private folderWindow fw;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		fw=new folderWindow(this);
 		init();
 	}
 
@@ -39,14 +43,16 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView=(RecyclerView) findViewById(R.id.rv);
 		recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),3));
 		recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, ScreenUtils.dip2px(this, 2), false));
+		view=findViewById(R.id.view);
+
+
 		RecylceAdapter recylceAdapter=new RecylceAdapter(getApplicationContext(),mDatas);
+
 		recylceAdapter.setOnItemClickListener(new RecyclerOnclickListener() {
 			@Override
 			public void onItemClick(View view, Imag data,int postion) {
 				if (data==null){
 					Toast.makeText(getApplicationContext(),"NULL",Toast.LENGTH_SHORT).show();
-
-
 				}else {
 					Toast.makeText(getApplicationContext(),postion+"",Toast.LENGTH_SHORT).show();
 					Intent i=new Intent(MainActivity.this,ViewPagerActivity.class);
@@ -59,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
 			}
 		});
-
-
 		recyclerView.setAdapter(recylceAdapter);
+		(findViewById(R.id.alltv)).setOnClickListener(onClickListener);
+
 	}
 
 
@@ -69,6 +75,19 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()){
+				case  R.id.alltv:
+					/*1.
+					*
+					* */
+					if (!fw.isShowing()) {
+						Log.d(TAG, "onClick: false");
+						fw.showAsDropDown(v);
+					}else{
+						Log.d(TAG, "onClick: true");
+						fw.dismiss();
+					}
+					break;
+
 
 			}
 		}

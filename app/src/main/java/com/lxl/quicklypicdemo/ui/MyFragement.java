@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.lxl.quicklypicdemo.R;
 
@@ -34,21 +35,26 @@ public class MyFragement extends Fragment {
 		return new MyFragement(path);
 	}
 
-
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View convertView= inflater.inflate(R.layout.myfragement,container,false);
 		final  ImageView iv=(ImageView) convertView.findViewById(R.id.fgiv);
-		Glide.with(container.getContext())
-			.load(new File(path))
-				.asBitmap()
-				.into(new SimpleTarget<Bitmap>() {
-					@Override
-					public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-						iv.setImageBitmap(resource);
-					}
-				});
+		//使用框架Glide加载图片，但加载动图需要改动，不能正常显示
+		if (!path.endsWith(".gif")) {
+			Glide.with(container.getContext())
+					.load(new File(path))
+					.asBitmap()
+					.into(new SimpleTarget<Bitmap>() {
+						@Override
+						public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+							iv.setImageBitmap(resource);
+						}
+					});
+		}else {
+			//加载Gif
+			Glide.with(container.getContext()).load(new File(path)).into(new GlideDrawableImageViewTarget(iv));
+		}
 		Log.d(TAG, "onCreateView: "+1);
 		return convertView;
 	}
