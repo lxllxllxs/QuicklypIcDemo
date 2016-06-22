@@ -3,11 +3,11 @@ package com.lxl.quicklypicdemo.ui;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.lxl.quicklypicdemo.Adapter.folderAdapter;
@@ -22,13 +22,12 @@ import java.util.List;
 public class folderWindow extends PopupWindow {
 	private View mWindow;
 	private RecyclerView mRecyclerView;
-	private ListView listView;
-	public static boolean isShow=false;
 	private  Context context;
-	private List<String> mdata;
+	private List<String> mdata;//保存文件夹路径
 
-	public folderWindow(Context context){
+	public folderWindow(Context context,List<String> mdata){
 		this.context=context;
+		this.mdata=mdata;//保存文件夹路径
 		mWindow= LayoutInflater.from(context).inflate(R.layout.folderwindow,null);
 		this.setContentView(mWindow);
 		this.setWidth(ScreenUtils.getScreenWidth(context));
@@ -42,10 +41,10 @@ public class folderWindow extends PopupWindow {
 
 	public void init(){
 		mRecyclerView=(RecyclerView) mWindow.findViewById(R.id.fwrv);
-		folderAdapter adapter=new folderAdapter(context,mdata);
-		listView.setAdapter(adapter);
+		folderAdapter adapter=new folderAdapter(context,mdata);//路径信息传递
+		mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+		mRecyclerView.setAdapter(adapter);
 		Log.d("INIT", "init: ");
-
 	}
 
 	@Override
@@ -59,6 +58,5 @@ public class folderWindow extends PopupWindow {
 		super.dismiss();
 		Log.d("Diss", "dismiss: ");
 	}
-
 
 }

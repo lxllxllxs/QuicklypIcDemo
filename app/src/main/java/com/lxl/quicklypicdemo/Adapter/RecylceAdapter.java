@@ -41,6 +41,8 @@ public class RecylceAdapter extends RecyclerView.Adapter {
 	//	this.onclicker=onClicListener;
 	}
 
+
+
 	public  void setOnItemClickListener(RecyclerOnclickListener Recycleonclickener){
 		mOnClickerListener=Recycleonclickener;
 	}
